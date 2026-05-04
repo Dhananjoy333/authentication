@@ -3,49 +3,36 @@ import React from "react";
 import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
 
 const AuthPage = () => {
+  const machineName = "State Machine 1";
+  const { rive, RiveComponent } = useRive({
+    src: "/login-character.riv",
+    stateMachines: machineName,
+    autoplay: true,
+  });
 
-  const machineName = "State Machine 1"
-  const {rive, RiveComponent} = useRive({
-    src:'/login-character.riv',
-    stateMachines:machineName,
-    autoplay: true
-  })
+  useStateMachineInput(rive, machineName, "Speaking", false);
 
-  useStateMachineInput(
-    rive,
-    machineName,
-    "Speaking",
-    false
-  )
+  const onTyping = useStateMachineInput(rive, machineName, "Check");
 
-  const onTyping = useStateMachineInput(
-    rive,
-    machineName,
-    "Check"
-  )
+  const follow = useStateMachineInput(rive, machineName, "Look");
 
-  const follow = useStateMachineInput(
-    rive,
-    machineName,
-    "Look"
-  )
+  const passwordInput = useStateMachineInput(rive, machineName, "hands_up");
 
-  const passwordInput = useStateMachineInput(
-    rive,
-    machineName,
-    "hands_up"
-  )
-
-  const success = useStateMachineInput(
-    rive,
-    machineName,
-    "success"
-  )
+  const success = useStateMachineInput(rive, machineName, "success");
 
   return (
     <div className="w-full h-svh flex flex-col justify-center items-center">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+      >
+        <source src="/bg-video.mp4" type="video/mp4" />
+      </video>
       <div className="w-55 2xl:w-88 h-55 2xl:h-88">
-        <RiveComponent/>
+        <RiveComponent />
       </div>
       <div className='w-87.5 2xl:w-140 h-110 2xl:h-150 flex flex-col items-center justify-center bg-[url("/bg.jpg")] bg-cover bg-center overflow-hidden relative rounded-lg'>
         <input type="checkbox" id="check" className="hidden peer" />
@@ -58,31 +45,34 @@ const AuthPage = () => {
               Sign Up
             </label>
             <input
-              onFocus={()=> onTyping.value = true}
-              onBlur={()=> onTyping.value = false}
-              onChange={(e)=> follow.value = (e.target.value.length*2)}
+              onFocus={() => (onTyping.value = true)}
+              onBlur={() => (onTyping.value = false)}
+              onChange={(e) => (follow.value = e.target.value.length * 2)}
               type="text"
               placeholder="Username"
               className="bg-gray-200 p-3 rounded-lg w-[80%]"
             />
             <input
-              onFocus={()=> onTyping.value = true}
-              onBlur={()=> onTyping.value = false}
-              onChange={(e)=> follow.value = (e.target.value.length*2)}
+              onFocus={() => (onTyping.value = true)}
+              onBlur={() => (onTyping.value = false)}
+              onChange={(e) => (follow.value = e.target.value.length * 2)}
               type="email"
               placeholder="Email"
               className="bg-gray-200 p-3 rounded-lg w-[80%]"
             />
             <input
-              onFocus={()=> passwordInput.value = true}
-              onBlur={()=> passwordInput.value = false}
+              onFocus={() => (passwordInput.value = true)}
+              onBlur={() => (passwordInput.value = false)}
               type="password"
               placeholder="password"
               className="bg-gray-200 p-3 rounded-lg w-[80%]"
             />
-            <button 
-            onClick={() => success?.fire()}
-            className="py-3 bg-[#4C1D95] text-xl font-bold text-white w-[60%] rounded-lg">Sign Up</button>
+            <button
+              onClick={() => success?.fire()}
+              className="py-3 bg-[#4C1D95] text-xl font-bold text-white w-[60%] rounded-lg"
+            >
+              Sign Up
+            </button>
           </form>
         </div>
         <div className="absolute w-full h-full bg-white translate-y-90 2xl:translate-y-130 rounded-t-[100px_20px] peer-checked:translate-y-20 2xl:peer-checked:translate-y-30 transition-all duration-500">
@@ -97,21 +87,23 @@ const AuthPage = () => {
               Login
             </label>
             <input
-              onFocus={()=> onTyping.value = true}
-              onBlur={()=> onTyping.value = false}
-              onChange={(e)=> follow.value = (e.target.value.length*2)}
+              onFocus={() => (onTyping.value = true)}
+              onBlur={() => (onTyping.value = false)}
+              onChange={(e) => (follow.value = e.target.value.length * 2)}
               type="email"
               placeholder="Email"
               className="bg-gray-200 p-3 rounded-lg w-[80%]"
             />
             <input
-              onFocus={()=> passwordInput.value = true}
-              onBlur={()=> passwordInput.value = false}
+              onFocus={() => (passwordInput.value = true)}
+              onBlur={() => (passwordInput.value = false)}
               type="password"
               placeholder="password"
               className="bg-gray-200 p-3 rounded-lg w-[80%]"
             />
-            <button className="py-3 bg-amber-400 text-xl font-bold text-white w-[60%] rounded-lg">Login</button>
+            <button className="py-3 bg-amber-400 text-xl font-bold text-white w-[60%] rounded-lg">
+              Login
+            </button>
           </form>
         </div>
       </div>
