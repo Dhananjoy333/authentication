@@ -1,0 +1,122 @@
+/* eslint-disable react-hooks/immutability */
+import React from "react";
+import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
+
+const AuthPage = () => {
+
+  const machineName = "State Machine 1"
+  const {rive, RiveComponent} = useRive({
+    src:'/login-character.riv',
+    stateMachines:machineName,
+    autoplay: true
+  })
+
+  useStateMachineInput(
+    rive,
+    machineName,
+    "Speaking",
+    false
+  )
+
+  const onTyping = useStateMachineInput(
+    rive,
+    machineName,
+    "Check"
+  )
+
+  const follow = useStateMachineInput(
+    rive,
+    machineName,
+    "Look"
+  )
+
+  const passwordInput = useStateMachineInput(
+    rive,
+    machineName,
+    "hands_up"
+  )
+
+  const success = useStateMachineInput(
+    rive,
+    machineName,
+    "success"
+  )
+
+  return (
+    <div className="w-full h-svh flex flex-col justify-center items-center">
+      <div className="w-55 h-55">
+        <RiveComponent/>
+      </div>
+      <div className='w-87.5 h-110 flex flex-col items-center justify-center bg-[url("/bg.jpg")] bg-cover bg-center overflow-hidden relative'>
+        <input type="checkbox" id="check" className="hidden peer" />
+        <div className="w-full h-full">
+          <form
+            action="#"
+            className="flex flex-col gap-5 py-8 justify-center items-center"
+          >
+            <label htmlFor="check" className="text-2xl text-white font-bold">
+              Sign Up
+            </label>
+            <input
+              onFocus={()=> onTyping.value = true}
+              onBlur={()=> onTyping.value = false}
+              onChange={(e)=> follow.value = (e.target.value.length*2)}
+              type="text"
+              placeholder="Username"
+              className="bg-gray-200 p-3 rounded-lg w-[80%]"
+            />
+            <input
+              onFocus={()=> onTyping.value = true}
+              onBlur={()=> onTyping.value = false}
+              onChange={(e)=> follow.value = (e.target.value.length*2)}
+              type="email"
+              placeholder="Email"
+              className="bg-gray-200 p-3 rounded-lg w-[80%]"
+            />
+            <input
+              onFocus={()=> passwordInput.value = true}
+              onBlur={()=> passwordInput.value = false}
+              type="password"
+              placeholder="password"
+              className="bg-gray-200 p-3 rounded-lg w-[80%]"
+            />
+            <button 
+            onClick={() => success?.fire()}
+            className="py-3 bg-[#4C1D95] text-xl font-bold text-white w-[60%] rounded-lg">Sign Up</button>
+          </form>
+        </div>
+        <div className="absolute w-full h-full bg-white translate-y-90 rounded-t-[100px_20px] peer-checked:translate-y-20 transition-all duration-500">
+          <form
+            action=""
+            className="flex flex-col gap-5 py-8 justify-center items-center"
+          >
+            <label
+              htmlFor="check"
+              className="text-2xl text-orange-500 font-bold"
+            >
+              Login
+            </label>
+            <input
+              onFocus={()=> onTyping.value = true}
+              onBlur={()=> onTyping.value = false}
+              onChange={(e)=> follow.value = (e.target.value.length*2)}
+              type="email"
+              placeholder="Email"
+              className="bg-gray-200 p-3 rounded-lg w-[80%]"
+            />
+            <input
+              onFocus={()=> passwordInput.value = true}
+              onBlur={()=> passwordInput.value = false}
+              type="password"
+              placeholder="password"
+              className="bg-gray-200 p-3 rounded-lg w-[80%]"
+            />
+            <button className="py-3 bg-amber-400 text-xl font-bold text-white w-[60%] rounded-lg">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AuthPage;
