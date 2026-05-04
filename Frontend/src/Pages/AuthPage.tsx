@@ -44,15 +44,15 @@ const AuthPage = () => {
 
   return (
     <div className="w-full h-svh flex flex-col justify-center items-center">
-      <div className="w-55 h-55">
+      <div className="w-55 2xl:w-88 h-55 2xl:h-88">
         <RiveComponent/>
       </div>
-      <div className='w-87.5 h-110 flex flex-col items-center justify-center bg-[url("/bg.jpg")] bg-cover bg-center overflow-hidden relative'>
+      <div className='w-87.5 2xl:w-140 h-110 2xl:h-150 flex flex-col items-center justify-center bg-[url("/bg.jpg")] bg-cover bg-center overflow-hidden relative rounded-lg'>
         <input type="checkbox" id="check" className="hidden peer" />
         <div className="w-full h-full">
           <form
             action="#"
-            className="flex flex-col gap-5 py-8 justify-center items-center"
+            className="flex flex-col gap-5 2xl:gap-10 py-8 2xl:py-14 justify-center items-center"
           >
             <label htmlFor="check" className="text-2xl text-white font-bold">
               Sign Up
@@ -85,14 +85,14 @@ const AuthPage = () => {
             className="py-3 bg-[#4C1D95] text-xl font-bold text-white w-[60%] rounded-lg">Sign Up</button>
           </form>
         </div>
-        <div className="absolute w-full h-full bg-white translate-y-90 rounded-t-[100px_20px] peer-checked:translate-y-20 transition-all duration-500">
+        <div className="absolute w-full h-full bg-white translate-y-90 2xl:translate-y-130 rounded-t-[100px_20px] peer-checked:translate-y-20 2xl:peer-checked:translate-y-30 transition-all duration-500">
           <form
             action=""
             className="flex flex-col gap-5 py-8 justify-center items-center"
           >
             <label
               htmlFor="check"
-              className="text-2xl text-orange-500 font-bold"
+              className="text-2xl text-orange-500 font-bold hover:cursor-pointer"
             >
               Login
             </label>
