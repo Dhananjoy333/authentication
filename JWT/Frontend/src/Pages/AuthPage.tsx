@@ -24,11 +24,15 @@ const AuthPage = () => {
         email: "",
         password: "",
     })
-
     const [login, setLogin] = useState({
         email: "",
         password: "",
     })
+    const [errors, setErrors] = useState({
+        username: "",
+        email: "",
+        password: "",
+    });
 
     const navigate = useNavigate();
 
@@ -36,14 +40,19 @@ const AuthPage = () => {
         e.preventDefault();
         if (mode === "signUp") {
             try {
-                const res = await axios.post(
+                await axios.post(
                     'http://localhost:3000/api/signUp',
-                    signUp
+                    signUp,{withCredentials : true}
                 );
-                alert(res.data.message);
+                setErrors({
+                    username: "",
+                    email: "",
+                    password: "",
+                });
+                navigate("/");
 
             } catch (e) {
-                console.log(e.response.data.message);
+                setErrors(e.response.data.errors)
             }
         } else {
             try {
@@ -91,6 +100,11 @@ const AuthPage = () => {
                         <label htmlFor="check" className="text-2xl text-white font-bold">
                             Sign Up
                         </label>
+                        {errors.username && (
+                            <p className="text-blue-500 bg-white text-sm">
+                                {errors.username}
+                            </p>
+                        )}
                         <input
                             onFocus={() => (onTyping.value = true)}
                             onBlur={() => (onTyping.value = false)}
@@ -108,6 +122,11 @@ const AuthPage = () => {
                             placeholder="Username"
                             className="bg-gray-200 p-3 rounded-lg w-[80%]"
                         />
+                        {errors.email && (
+                            <p className="text-blue-500 bg-white text-sm">
+                                {errors.email}
+                            </p>
+                        )}
                         <input
                             onFocus={() => (onTyping.value = true)}
                             onBlur={() => (onTyping.value = false)}
@@ -125,6 +144,11 @@ const AuthPage = () => {
                             placeholder="Email"
                             className="bg-gray-200 p-3 rounded-lg w-[80%]"
                         />
+                        {errors.password && (
+                            <p className="text-blue-500 bg-white text-sm">
+                                {errors.password}
+                            </p>
+                        )}
                         <input
                             onFocus={() => (passwordInput.value = true)}
                             onBlur={() => (passwordInput.value = false)}
@@ -154,7 +178,7 @@ const AuthPage = () => {
                     >
                         <label
                             htmlFor="check"
-                            className="text-2xl text-orange-500 font-bold hover:cursor-pointer"
+                            className="text-2xl text-orange-500  font-bold hover:cursor-pointer"
                         >
                             Login
                         </label>
