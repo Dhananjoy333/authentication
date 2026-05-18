@@ -56,21 +56,19 @@ const AuthPage = () => {
             }
         } else {
             try {
-                const res = await axios.post(
+                await axios.post(
                     'http://localhost:3000/api/login',
                     login,
+                    {withCredentials : true}
                 );
-                alert(res.data.message);
+                setErrors({
+                    username: "",
+                    email: "",
+                    password: "",
+                });
                 navigate("/secret");
             } catch (e) {
-                if (
-                    e.response.status === 401 ||
-                    e.response.status === 404
-                ) {
-                    alert(e.response.data.message);
-                } else {
-                    console.log(e);
-                }
+                setErrors(e.response.data.errors)
             }
         }
     }
@@ -182,6 +180,11 @@ const AuthPage = () => {
                         >
                             Login
                         </label>
+                        {errors.email && (
+                            <p className="text-blue-500 bg-white text-sm">
+                                {errors.email}
+                            </p>
+                        )}
                         <input
                             onFocus={() => (onTyping.value = true)}
                             onBlur={() => (onTyping.value = false)}
@@ -199,6 +202,11 @@ const AuthPage = () => {
                             placeholder="Email"
                             className="bg-gray-200 p-3 rounded-lg w-[80%]"
                         />
+                        {errors.password && (
+                            <p className="text-blue-500 bg-white text-sm">
+                                {errors.password}
+                            </p>
+                        )}
                         <input
                             onFocus={() => (passwordInput.value = true)}
                             onBlur={() => (passwordInput.value = false)}
