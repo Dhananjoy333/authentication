@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { User } from './models/Users.js';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose'
+import requireAuth from "./middleware/authMiddleware.js";
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -97,12 +98,10 @@ app.post('/api/login', async (req, res) => {
     }
 })
 
-// Basic Route
-app.get('/', async (req, res) => {
-    // const students = await Student.find({},{_id: false, name:true})
-    // res.json(students);
-    res.send("welcome")
-});
+//protected route
+app.get('/api/secret', requireAuth,async (req, res) => {
+    res.status(200).json({message:'authorized'})
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
