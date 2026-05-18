@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { User } from './models/Users.js';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose'
-import requireAuth from "./middleware/authMiddleware.js";
+import requireAuth, {checkUser} from "./middleware/authMiddleware.js";
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -108,6 +108,11 @@ app.post('/api/logout',(req, res) => {
     res.cookie('jwt',"",{maxAge: 1})
     res.status(200).json({message:'logout successful'})
 })
+
+//check user exist(logged in) if so sent the user data
+app.get('/api/user', checkUser, (req, res) => {
+    res.json({ user: res.locals.user });
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
