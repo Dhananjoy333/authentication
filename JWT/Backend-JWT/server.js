@@ -103,6 +103,12 @@ app.get('/api/secret', requireAuth,async (req, res) => {
     res.status(200).json({message:'authorized'})
 })
 
+//logout
+app.post('/api/logout',(req, res) => {
+    res.cookie('jwt',"",{maxAge: 1})
+    res.status(200).json({message:'logout successful'})
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

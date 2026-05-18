@@ -21,8 +21,10 @@ const MyComponent = () => {
 
         checkAuth();
     }, []);
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+
+    const handleClick = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        await axios.post("http://localhost:3000/api/logout",{},{withCredentials:true})
         navigate("/");
     }
 
@@ -31,7 +33,7 @@ const MyComponent = () => {
             <p>
             Welcome you gained access to this secret page
             </p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleClick}>
                 <button type='submit' className='border-3 p-2 bg-yellow-300 rounded-lg'>Log out</button>
             </form>
         </div>
